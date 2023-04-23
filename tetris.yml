@@ -1,0 +1,41 @@
+---
+- name: Deploying Static App
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: Update Apt Repository
+    apt:
+      update_cache: yes
+
+  - name: Install Nginx
+    apt:
+      name: nginx
+      state: latest
+
+  - name: Git Clone
+    git:
+      repo: https://github.com/Paulanisiobi/tetris-light.git
+      dest: /home/ubuntu/ansible2/tetris-light
+      single_branch: yes
+      version: master
+      
+
+  - name: Change mode of /home/ubuntu directory
+    file:
+      path: /home/ubuntu
+      mode: "0777"
+      state: directory
+
+
+  - name: Copy Nginx configuration to servers
+    copy:
+      src: /home/ubuntu/ansible2/tetris-light/default
+      dest: /etc/nginx/sites-enabled/default
+      owner: www-data
+      mode: '0644'
+
+  - name: Restart Nginx service
+    service:
+      name: nginx
+      state: restarted

@@ -48,3 +48,6 @@ Temporary Items
 *.xml
 .idea/tetris-light.iml
 *.name
+
+ansibletet1.pem
+inventory

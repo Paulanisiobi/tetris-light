@@ -16,16 +16,10 @@
   - name: Git Clone
     git:
       repo: https://github.com/Paulanisiobi/tetris-light.git
-      dest: /home/ubuntu/ansible2/tetris-light
+      dest: /var/www/html/ansible
       single_branch: yes
       version: master
       
-
-  - name: Change mode of /home/ubuntu directory
-    file:
-      path: /home/ubuntu
-      mode: "0777"
-      state: directory
 
 
   - name: Copy Nginx configuration to servers
@@ -39,3 +33,4 @@
     service:
       name: nginx
       state: restarted
+     

@@ -1,1 +1,1 @@
-ubuntu@52.207.213.73 ansible_ssh_private_key_file=tetansible.pem
+ubuntu@44.211.153.181 ansible_ssh_private_key_file=ansibletet1.pem

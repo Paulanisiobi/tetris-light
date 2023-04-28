@@ -50,4 +50,5 @@ Temporary Items
 *.name
 
 ansibletet1.pem
+paulkey.pem
 inventory

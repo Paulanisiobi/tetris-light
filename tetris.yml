@@ -20,17 +20,33 @@
       single_branch: yes
       version: master
       
-
-
+      
+    
   - name: Copy Nginx configuration to servers
     copy:
       src: /home/ubuntu/ansible2/tetris-light/default
       dest: /etc/nginx/sites-enabled/default
       owner: www-data
       mode: '0644'
+      
+      
 
   - name: Restart Nginx service
     service:
       name: nginx
       state: restarted
      
+  
+  - name: Copy Azure-specific configuration file
+    when: "'azure' in ansible_env.PLATFORM_NAME"
+    copy:
+      src: /home/ubuntu/azure-specific-file
+      dest: /etc/nginx/sites-available/azure-specific-file
+      owner: www-data
+      mode: '0644'
+
+  - name: Create Azure-specific directory
+    when: "'azure' in ansible_env.PLATFORM_NAME"
+    file:
+      path: /var/www/html/ansible/azure-directory
+      state: directory

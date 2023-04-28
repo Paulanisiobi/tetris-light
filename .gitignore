@@ -49,6 +49,7 @@ Temporary Items
 .idea/tetris-light.iml
 *.name
 
+# Files I don't want to push
 ansibletet1.pem
-paulkey.pem
+paul-training-key.pem
 inventory

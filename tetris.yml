@@ -16,7 +16,7 @@
   - name: Git Clone
     git:
       repo: https://github.com/Paulanisiobi/tetris-light.git
-      dest: /var/www/html/ansible
+      dest: '{{ ansible_env["PWD"]}}/app'
       single_branch: yes
       version: master
       
@@ -28,8 +28,22 @@
       dest: /etc/nginx/sites-enabled/default
       owner: www-data
       mode: '0644'
-      
-      
+    when: ansible_env["PWD"] == "ubuntu"
+
+
+  - name: Copy Nginx configuration to servers
+    copy:
+      src: /home/ubuntu/ansible2/tetris-light/default
+      dest: /etc/nginx/sites-enabled/default
+      owner: www-data
+      mode: '0644'
+    when: ansible_env["PWD"] == "azureuser" 
+  
+  - name: print ansible_env
+    ansible.builtin.debug:
+      msg: '{{ ansible_env["SUDO_USER"]}}/app'
+    
+         
 
   - name: Restart Nginx service
     service:
@@ -37,16 +51,3 @@
       state: restarted
      
   
-  - name: Copy Azure-specific configuration file
-    when: "'azure' in ansible_env.PLATFORM_NAME"
-    copy:
-      src: /home/ubuntu/azure-specific-file
-      dest: /etc/nginx/sites-available/azure-specific-file
-      owner: www-data
-      mode: '0644'
-
-  - name: Create Azure-specific directory
-    when: "'azure' in ansible_env.PLATFORM_NAME"
-    file:
-      path: /var/www/html/ansible/azure-directory
-      state: directory

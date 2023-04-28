@@ -1,5 +1,5 @@
 server{
-    root /home/azureuser/app;
+    root /home/ubuntu/app;
     index index.html;
    
    location / {
